@@ -118,7 +118,8 @@ public class AuctionController {
 
                 String name = request.getParameter("auctionName");
                 String des = request.getParameter("auctionDesc");
-                BigDecimal price = new BigDecimal(request.getParameter("auctionStartPrice").equals("") ? "0" : request.getParameter("auctionStartPrice"));
+                String auctionStartPrice = request.getParameter("auctionStartPrice");
+                BigDecimal price = new BigDecimal("".equals(auctionStartPrice) || null == auctionStartPrice ? "0" : auctionStartPrice);
 
                 List<Auction> auctions = this.auctionService.seleteAuction(name, des, price);
                 modelAndView.addObject("isAuctions", auctions);

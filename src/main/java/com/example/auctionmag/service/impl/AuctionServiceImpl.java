@@ -33,12 +33,12 @@ public class AuctionServiceImpl extends ServiceImpl<AuctionMapper, Auction> impl
     public List<Auction> seleteAuction(String name, String des, BigDecimal price) {
         QueryWrapper<Auction> wrapper = new QueryWrapper<>();
         wrapper.eq("auctionStatus",1);
-        if (name!=null){
+        if (name != null && !"".equals(name)){
             wrapper.and((w)->{
                 w.like("auctionName",name);
             });
         }
-        if (des!=null){
+        if (des!=null && !des.equals("")){
             wrapper.and((w)->{
                 w.like("auctionDesc",des);
             });
