@@ -67,7 +67,7 @@ public class UserController {
             cookie.setMaxAge(24 * 60 * 60); // cookie1天后过期
             //将cookie对象加入response响应
             response.addCookie(cookie);
-            return auctionController.auctionPage(user.getUserName());//登录成功，进入竞拍页
+            return auctionController.auctionPage(user.getUserName(), request);//登录成功，进入竞拍页
         }
         else {
             ModelAndView modelAndView = new ModelAndView();

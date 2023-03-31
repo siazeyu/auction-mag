@@ -5,7 +5,6 @@ import com.example.auctionmag.entity.Auction;
 import com.example.auctionmag.entity.Auctionrecord;
 import com.example.auctionmag.entity.User;
 import com.example.auctionmag.mapper.AuctionMapper;
-import com.example.auctionmag.mapper.AuctionrecordMapper;
 import com.example.auctionmag.service.AuctionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.auctionmag.service.UserService;
@@ -31,9 +30,22 @@ public class AuctionServiceImpl extends ServiceImpl<AuctionMapper, Auction> impl
     @Autowired
     UserService userService;
     @Override
-    public List<Auction> seleteAuction() {
+    public List<Auction> seleteAuction(String name, String des, BigDecimal price) {
         QueryWrapper<Auction> wrapper = new QueryWrapper<>();
         wrapper.eq("auctionStatus",1);
+        if (name!=null){
+            wrapper.and((w)->{
+                w.like("auctionName",name);
+            });
+        }
+        if (des!=null){
+            wrapper.and((w)->{
+                w.like("auctionDesc",des);
+            });
+        }
+        wrapper.and((w)->{
+            w.ge("auctionStartPrice",price);//大于等于竞拍价
+        });
         return this.list(wrapper);
     }
 

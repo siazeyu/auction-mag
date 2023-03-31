@@ -105,7 +105,7 @@ public class AuctionController {
      * @return
      */
     @RequestMapping("/auctionPage")
-    public ModelAndView auctionPage(@CookieValue(value = "userName") String redisKey){
+    public ModelAndView auctionPage(@CookieValue(value = "userName") String redisKey, HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
         User user;
         ValueOperations<String,User> ops = redisTemplate.opsForValue();
@@ -115,7 +115,12 @@ public class AuctionController {
                 modelAndView.addObject("user", user);
                 List<Auctionrecord> auctionrecords = auctionrecordService.list();
                 List<AuctionRecordUserVo> auctionRecordUserVos = auctionService.getRecordUserName(auctionrecords);
-                List<Auction> auctions = this.auctionService.seleteAuction();
+
+                String name = request.getParameter("auctionName");
+                String des = request.getParameter("auctionDesc");
+                BigDecimal price = new BigDecimal(request.getParameter("auctionStartPrice").equals("") ? "0" : request.getParameter("auctionStartPrice"));
+
+                List<Auction> auctions = this.auctionService.seleteAuction(name, des, price);
                 modelAndView.addObject("isAuctions", auctions);
                 modelAndView.addObject("auctionRecordUser", auctionRecordUserVos);
                 modelAndView.setViewName("竞拍页");
@@ -265,7 +270,7 @@ public class AuctionController {
             auctionrecordService.save(auctionrecord);
             System.out.println("竞拍者："+user.getUserName());
         }
-        return this.auctionPage(redisKey);
+        return this.auctionPage(redisKey, request);
     }
 
 }

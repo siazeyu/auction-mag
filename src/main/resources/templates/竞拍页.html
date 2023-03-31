@@ -14,6 +14,19 @@
     <h1 class="lf">在线拍卖系统</h1>
     <div class="logout right"><a href="/logout" title="注销" target="_self">注销</a></div>
   </div>
+
+    <div class="forms">
+        <form name="auctionForm" method="post" target="_self" action="/auctionPage">
+            <label for="name">名称</label>
+            <input name="auctionName" type="text" class="nwinput" th:value="${param.get('auctionName')}" id="name"/>
+            <label for="names">描述</label>
+            <input name="auctionDesc" type="text" id="names" th:value="${param.get('auctionDesc')}" class="nwinput"/>
+            <label for="price">起拍价</label>
+            <input name="auctionStartPrice" type="text" id="price" th:value="${param.get('auctionStartPrice')}" class="nwinput" />
+            <input name="search"  type="submit" value="查询" class="spbg buttombg f14  sale-buttom"/>
+        </form>
+    </div>
+
   <div class="items sg-font lf" th:each="item:${isAuctions}">
       <ul class="rows">
         <li>名称：</li>

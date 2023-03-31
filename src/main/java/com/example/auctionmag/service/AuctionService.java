@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public interface AuctionService extends IService<Auction> {
 
-    List<Auction> seleteAuction();
+    List<Auction> seleteAuction(String name, String des, BigDecimal price);
 
     List<AuctionRecordUserVo> getRecordUserName(List<Auctionrecord> auctionrecords);
 
