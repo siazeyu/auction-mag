@@ -7,13 +7,13 @@ import java.io.*;
 
 public class FileUtil {
 
-    public static void save(MultipartFile file) {
+    public static void save(MultipartFile file, String fileName) {
         File temp = new File("F:\\uploads");
         if (!temp.exists()) {
             temp.mkdirs();
         }
 
-        File localFile = new File("F:\\uploads\\" + file.getOriginalFilename());
+        File localFile = new File("F:\\uploads\\" + fileName);
         try {
             file.transferTo(localFile); //把上传的文件保存至本地
         } catch (IOException e) {

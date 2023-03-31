@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -147,17 +148,19 @@ public class AuctionController {
      * @return
      */
     @RequestMapping("/editAuction")
-    public ModelAndView editAuction(HttpServletRequest request){
+    public ModelAndView editAuction(HttpServletRequest request, @RequestParam("auctionPic") MultipartFile file){
         String auctionStartPrice = request.getParameter("auctionStartPrice");
         String auctionUpset = request.getParameter("auctionUpset");
         String auctionStartTime = request.getParameter("auctionStartTime");
         String auctionEndTime = request.getParameter("auctionEndTime");
-        String auctionPic = request.getParameter("auctionPic");
+        String auctionPic = UUID.randomUUID() + ".jpg";
         Auction auctionp = auctionService.getById(this.auctionId);
         Auction auction = new Auction();
         auction.setAuctionId(this.auctionId);
-        if (auctionPic.equals("")){
+        if (file.getOriginalFilename().equals("")){
             auctionPic = auctionp.getAuctionPic();
+        }else {
+            FileUtil.save(file, auctionPic);
         }
         auction.setAuctionPic(auctionPic);
         auction.setAuctionStartPrice(new BigDecimal(auctionStartPrice));
@@ -182,13 +185,13 @@ public class AuctionController {
      */
     @RequestMapping("/addAuctionHandle")
     public ModelAndView addAuction(HttpServletRequest request, @RequestParam("auctionPic") MultipartFile file){
-        FileUtil.save(file);
+        String auctionPic = UUID.randomUUID() + ".jpg";
+        FileUtil.save(file, auctionPic);
         String auctionName = request.getParameter("auctionName");
         String auctionStartPrice = request.getParameter("auctionStartPrice");
         String auctionUpset = request.getParameter("auctionUpset");
         String auctionStartTime = request.getParameter("auctionStartTime");
         String auctionEndTime = request.getParameter("auctionEndTime");
-        String auctionPic = file.getOriginalFilename();
         String auctionDesc = request.getParameter("auctionDesc");
         Auction auction = new Auction();
         auction.setAuctionName(auctionName);
