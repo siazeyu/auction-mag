@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/auction?serverTimezone=Asia/Shanghai
+    username: auction
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    host: 120.24.48.65
+    password: 200808
+    port: 6379
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:com/example/auctionmag/mapper/xml/*.xml
+  type-aliases-package: com.example.auctionmag.entity
+server:
+  port: 8081

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>竞拍者登录</title>
+<link href="/static/css/common.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="wrap">
+<!-- main begin-->
+ <div class="main" style="margin-top: 20%">
+   <div class="sidebar">
+     <p><img src="/static/images/img1.jpg" width="443" height="314" alt="" /></p>
+   </div>
+   <div class="sidebarg">
+     <form name="loginForm" method="post" target='_self'>
+    <div class="login" style="">
+      <dl>
+        <dt class="blues" style="margin-left: 30%;">用户登陆</dt>
+          <dt style="margin-left: 30%; color: red" th:text="${msg}"></dt>
+        <dd><label >用户名：</label><input type="text" class="inputh" value="" name="name"/></dd>
+        <dd><label >密 码：</label><input type="text" class="inputh" value="" name="password"/></dd>
+        <dd>
+           <label class="lf" >验证码：</label>
+           <input type="text" class="inputh inputs lf" value="" name="verificationCode"/>
+           <span class="wordp lf"><img src="/static/images/img2.jpg" width="96" height="27" alt="" /></span>
+           <span class="blues lf"><a href="" title="">看不清</a></span>
+        </dd>
+        <dd>
+           <input name=""  type="checkbox" id="rem_u"  />
+           <span for="rem_u">下次自动登录</span>
+        </dd>
+        <dd class="buttom" >
+            <button onclick="login()"style="color: chartreuse;margin-left: 60px">登录</button>
+            <button onclick="registers()" style="margin-left: 60px">注册</button>
+            <button onclick="adminLogin()" style="margin-left: 60px">管理员登录</button>
+           <div class="cl"></div>
+        </dd>
+
+      </dl>
+    </div>
+    </form>
+   </div>
+  <div class="cl"></div>
+ </div>
+<!-- main end-->
+
+<!-- footer begin-->
+</div>
+ <!--footer end-->
+
+</div>
+</body>
+</html>
+<script>
+    function login(){
+        document.loginForm.action="/handleUserLogin"
+        document.loginForm.submit();
+    }
+    function registers(){
+        document.loginForm.action="/registerPage"
+    }
+    function adminLogin(){
+        document.loginForm.action="/adminLoginHandle"
+        document.loginForm.submit();
+    }
+</script>
+<style>
+
+</style>

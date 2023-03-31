@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>竞拍页</title>
+<link href="/static/css/common.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="wrap">
+<!-- main begin-->
+  <div class="sale">
+    <h1 class="lf">在线拍卖系统</h1>
+    <div class="logout right"><a href="/logout" title="注销" target="_self">注销</a></div>
+  </div>
+  <div class="items sg-font lf" th:each="item:${isAuctions}">
+      <ul class="rows">
+        <li>名称：</li>
+        <li class="borderno" th:text="${item.getAuctionName()}"></li>
+      </ul>
+      <ul class="rows">
+        <li>描述：</li>
+        <li class="borderno" th:text="${item.getAuctionDesc()}"></li>
+      </ul>
+      <ul class="rows">
+        <li>开始时间：</li>
+        <li class="borderno" th:text="${item.getAuctionStartTime()}"></li>
+      </ul>
+      <ul class="rows">
+        <li>结束时间：</li>
+        <li class="borderno" th:text="${item.getAuctionEndTime()}"></li>
+      </ul>
+      <ul class="rows border-no">
+        <li>起拍价：</li>
+        <li class="borderno" th:text="${item.getAuctionStartPrice()}"></li>
+      </ul>
+      <ul class="rows border-no">
+          <li>当前最高价：</li>
+          <li class="borderno" th:text="${item.getHighestPrice()}"></li>
+      </ul>
+
+      <div class="rg borders"><img th:src="'/file/'+ ${item.getAuctionPic()}" width="200" height="140" alt="" />
+          <form name="auctionform" method="post" target="_self" action="/doAuction">
+              <div class="top10 salebd">
+                  <p>
+                      <label >出价：</label>
+                      <input type="text" name="sale" class="inputwd" value=""/>
+                      <input type="hidden" name="auctionId" th:value="${item.getAuctionId()}"/>
+                      <input type="submit" value="竞 拍" class="spbg buttombg f14  sale-buttom" />
+                  </p>
+                  <p class="f14 red">不能低于最高竞拍价</p>
+              </div>
+          </form>
+      </div>
+  </div>
+
+  <div class="cl"></div>
+  <div class="top10">
+    <input name="" type="button" onclick="refreshs()" value="刷 新" class="spbg buttombg f14" />
+      <form action="/auctionResultPage" method="post" target="_self">
+    <input name="" type="submit" value="查看竞拍结果" class="spbg buttombg f14" style="margin-top: 20px"/>
+      </form>
+  </div>
+  <div class="offer">
+    <h3>出价记录</h3>
+    <div class="items sg-font">
+      <ul class="rows even strong">
+        <li>竞拍物</li>
+        <li>竞拍时间</li>
+        <li>竞拍价格</li>
+      </ul>
+      <ul class="rows" th:each="record:${auctionRecordUser}">
+        <li th:text="${record.getAuctionName()}"></li>
+        <li th:text="${record.getAuctionTime()}"></li>
+        <li th:text="${record.getAuctionPrice()}"></li>
+      </ul>
+  </div>
+<!-- main end-->
+</div>
+</div>
+</body>
+</html>
+<script>
+    function refreshs(){
+        window.location.reload()
+    }
+</script>
